@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Apresentação · Port Alder</title>
+<style>
+  @page { size: 1280px 720px; margin: 0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #d9d8d2; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #1b1b19; }
+  .slide { width: 1280px; height: 720px; margin: 0 auto 24px; background: #ffffff; position: relative; overflow: hidden;
+           padding: 52px 64px; display: flex; flex-direction: column; break-after: page; }
+  @media print { body { background: #fff; } .slide { margin: 0; } }
+  .rotulo { font-size: 15px; font-weight: 700; color: #2a78d6; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+  h1 { font-size: 40px; line-height: 1.12; margin: 0 0 18px; }
+  .grade { display: grid; grid-template-columns: 1fr 1.25fr; gap: 36px; flex: 1; min-height: 0; align-items: start; }
+  p, li { font-size: 21px; line-height: 1.4; }
+  ul { margin: 0; padding-left: 24px; }
+  li { margin-bottom: 12px; }
+  img { width: 100%; border: 1px solid #e1e0d9; border-radius: 8px; display: block; }
+  .numero { font-size: 64px; font-weight: 800; color: #c22f2f; line-height: 1; }
+  .numero-legenda { font-size: 19px; color: #52514e; margin: 6px 0 22px; }
+  .destaque { background: #eef4fc; border-left: 6px solid #2a78d6; padding: 16px 20px; border-radius: 4px; font-size: 21px; }
+  .rodape { position: absolute; bottom: 20px; left: 64px; right: 64px; font-size: 13px; color: #6f6e69; display: flex; justify-content: space-between; }
+  code { font-size: 0.9em; background: #f1f0ec; padding: 1px 5px; border-radius: 4px; }
+  .citacao { font-size: 19px; color: #3a3936; border-left: 4px solid #c3c2b7; padding-left: 14px; margin: 8px 0 18px; }
+</style>
+</head>
+<body>
+
+<!-- Slide 1 -->
+<section class="slide">
+  <div class="rotulo">O painel e para quem</div>
+  <h1>Um painel para a diretoria decidir onde agir primeiro nos 14 hotéis de Port Alder</h1>
+  <div class="grade">
+    <div>
+      <p>Três decisões que ele apoia:</p>
+      <ul>
+        <li><strong>Em quais hotéis intervir?</strong> RGI contra os concorrentes e mapa preço × ocupação.</li>
+        <li><strong>Confiar na regra de preço semanal?</strong> Resultado da semana seguinte por tipo de decisão.</li>
+        <li><strong>Onde investir em operação?</strong> Motivos das avaliações e notas por hotel.</li>
+      </ul>
+      <p style="font-size:17px;color:#52514e;margin-top:14px">Filtros de ano, tier e hotel atualizam juntos 6 KPIs, 4 gráficos e a tabela. Funciona no computador e no celular.</p>
+    </div>
+    <img src="painel.png" alt="Captura do painel">
+  </div>
+  <div class="rodape"><span>Demonstração ao vivo: <code>dashboard/index.html</code></span><span>Dataset sintético Nice Rooms (CC BY 4.0)</span></div>
+</section>
+
+<!-- Slide 2 -->
+<section class="slide">
+  <div class="rotulo">Principal descoberta</div>
+  <h1>Desconto não compra volume: os hotéis que cobram menos que os concorrentes também vendem menos</h1>
+  <div class="grade">
+    <div>
+      <div class="numero">8 de 14</div>
+      <div class="numero-legenda">hotéis com RGI abaixo de 100 (perdem receita para os pares do mesmo tier)</div>
+      <div class="numero">~9,4 mi USD</div>
+      <div class="numero-legenda">de receita de quartos em 2 anos, se tivessem o RevPAR dos concorrentes (referência, não promessa)</div>
+      <p class="destaque">The Foxglove cobra 19% abaixo da diária de mercado (MARS), tem RGI 76 e recebeu recomendação de <strong>aumentar</strong> em 100 de 103 semanas. Continuou ~19% abaixo da MARS nos dois anos.</p>
+    </div>
+    <img src="../notebooks/figuras/03_posicionamento.png" alt="Mapa de posicionamento">
+  </div>
+  <div class="rodape"><span>Fonte: notebooks 03 e 04 · índices ARI/MPI/RGI contra o comp set do mesmo tier</span><span>Associação, não causa</span></div>
+</section>
+
+<!-- Slide 3 -->
+<section class="slide">
+  <div class="rotulo">Destaque do Diário de Campo</div>
+  <h1>O erro mais perigoso da IA não foi o código que quebrou, foi o texto que parecia certo</h1>
+  <div class="grade" style="grid-template-columns: 1fr 1fr;">
+    <div>
+      <p><strong>Código errado avisa.</strong> A IA usou <code>$exists</code>, que o mongita não suporta: a célula falhou e a correção levou um minuto.</p>
+      <p><strong>Texto errado não avisa.</strong> As interpretações escritas antes de ver as saídas diziam:</p>
+      <p class="citacao">"9 hotéis dentro da faixa MARS" → eram <strong>8</strong><br>"4 causas geram ~95% das notas 1–2" → eram <strong>82%</strong></p>
+    </div>
+    <div>
+      <p class="destaque"><strong>Regra que adotei:</strong> toda frase com número foi conferida contra a saída da célula logo acima. Os KPIs do painel foram conferidos contra os notebooks (receita total, nota média, % de notas 1–2, RGI do Foxglove).</p>
+      <p style="margin-top:22px"><strong>Aprendizado:</strong> antes de comparar totais, confira se os períodos têm o mesmo tamanho. 2027 tem 362 noites e 2028 tem 366, e o "crescimento de 1%" era efeito de calendário.</p>
+    </div>
+  </div>
+  <div class="rodape"><span>diario_de_campo.md</span><span>Obrigado! Perguntas?</span></div>
+</section>
+
+</body>
+</html>

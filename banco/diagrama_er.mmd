@@ -1,0 +1,91 @@
+erDiagram
+    hotels ||--o{ daily_market : "opera (noite)"
+    hotels ||--o{ weekly_performance : "opera (semana)"
+    weekly_performance ||--o| rate_decisions : "decisão da semana"
+    weekly_performance ||--o{ reviews : "estadias da semana"
+    review_scenarios ||--o{ reviews : "origina"
+    room_types ||--o{ reviews : "quarto avaliado"
+    hotels ||--o{ room_types : "tem"
+    hotels ||--o{ hotel_amenities : "oferece"
+    amenities ||--o{ hotel_amenities : "aparece em"
+
+    hotels {
+        TEXT hotel_id PK
+        TEXT name
+        TEXT brand
+        TEXT tier
+        INTEGER rooms
+        INTEGER opened_year
+        REAL distance_to_water_km
+        TEXT neighbourhood
+        TEXT comp_set
+        REAL positioning_index
+        REAL base_rate
+        TEXT city
+    }
+    amenities {
+        INTEGER amenity_id PK
+        TEXT amenity UK
+    }
+    hotel_amenities {
+        TEXT hotel_id PK,FK
+        INTEGER amenity_id PK,FK
+    }
+    room_types {
+        TEXT room_type_id PK
+        TEXT hotel_id FK "UK com room_type"
+        TEXT room_type
+        INTEGER rooms
+        INTEGER max_occupancy
+        REAL size_sqm
+        REAL bar_rate
+        TEXT view
+    }
+    daily_market {
+        TEXT hotel_id PK,FK
+        TEXT date PK
+        TEXT season
+        TEXT demand_event
+        INTEGER rooms_available
+        INTEGER rooms_sold
+        REAL room_revenue
+        REAL rgi
+        REAL mars_rate
+        TEXT rate_action
+        REAL demais_colunas "+40 métricas (adr, revpar...)"
+    }
+    weekly_performance {
+        TEXT hotel_id PK,FK
+        TEXT week_start PK
+        REAL total_revenue
+        REAL revpar
+        REAL rgi
+        INTEGER review_count
+        REAL mean_rating "nulo sem avaliações"
+        REAL demais_colunas "+30 métricas"
+    }
+    rate_decisions {
+        TEXT decision_id PK
+        TEXT hotel_id FK "UK com week_start"
+        TEXT week_start FK
+        TEXT action
+        REAL suggested_change_pct
+        REAL realised_uplift_pct
+        TEXT outcome
+    }
+    reviews {
+        TEXT review_id PK
+        TEXT hotel_id FK
+        TEXT week_start FK
+        TEXT scenario_id FK
+        TEXT room_type FK
+        INTEGER rating
+        TEXT text
+        REAL response_hours "nulo sem resposta"
+    }
+    review_scenarios {
+        TEXT scenario_id PK
+        TEXT label
+        TEXT rating_band
+        TEXT recovery_action
+    }

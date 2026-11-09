@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Relatório executivo · Port Alder</title>
+<style>
+  @page { size: A4; margin: 13mm 14mm 12mm; }
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 9.2pt; line-height: 1.33; color: #1b1b19; margin: 0; }
+  h1 { font-size: 16pt; margin: 0 0 2px; }
+  h2 { font-size: 11pt; margin: 9px 0 4px; padding-top: 5px; border-top: 1.5px solid #2a78d6; }
+  p { margin: 0 0 5px; }
+  ul { margin: 2px 0 6px; padding-left: 16px; }
+  li { margin-bottom: 2px; }
+  .meta { color: #52514e; font-size: 8.6pt; margin-bottom: 8px; }
+  .resumo { background: #eef4fc; border-left: 4px solid #2a78d6; padding: 7px 10px; margin: 6px 0 4px; }
+  .resumo li { margin-bottom: 3px; }
+  .duas { display: grid; grid-template-columns: 1.5fr 1fr; gap: 12px; align-items: start; }
+  figure { margin: 0; }
+  figure img { width: 100%; display: block; border: 1px solid #e1e0d9; }
+  figcaption { font-size: 7.8pt; color: #52514e; margin-top: 2px; }
+  table { border-collapse: collapse; width: 100%; font-size: 8.4pt; font-variant-numeric: tabular-nums; margin: 3px 0 5px; }
+  th, td { padding: 2.5px 5px; border-bottom: 1px solid #e1e0d9; text-align: left; }
+  th { color: #52514e; font-weight: 600; }
+  td.n, th.n { text-align: right; }
+  .ruim { color: #c22f2f; font-weight: 600; }
+  .rec { font-weight: 600; color: #1c5cab; }
+  .limites { font-size: 8.6pt; color: #3a3936; }
+  .quebra { break-before: page; }
+  .rodape { font-size: 7.8pt; color: #6f6e69; margin-top: 8px; border-top: 1px solid #e1e0d9; padding-top: 4px; }
+</style>
+</head>
+<body>
+
+<h1>Inteligência de Receita — Hotéis de Port Alder</h1>
+<p class="meta">Relatório executivo para a diretoria da associação · Período analisado: 2027–2028 (14 hotéis) · Dataset sintético <em>Nice Rooms</em> (CC BY 4.0)</p>
+
+<div class="resumo">
+<strong>Em uma frase por pergunta:</strong>
+<ul>
+  <li><strong>Desempenho:</strong> 6 hotéis superam os concorrentes diretos e 8 ficam abaixo. Os 8 de baixo cobram <em>menos</em> que os pares e, mesmo assim, não vendem mais quartos. Esse gap equivale a ~9,4 mi USD de receita de quartos em dois anos.</li>
+  <li><strong>Decisões de preço:</strong> não há evidência de que funcionem ou de que falhem. A semana seguinte é "melhor" em ~40% dos casos, qualquer que seja a ação, e as recomendações se repetem por meses sem mudar o posicionamento.</li>
+  <li><strong>Hóspedes:</strong> 56% das avaliações têm 3 estrelas ou menos, e quatro causas operacionais geram 82% das notas 1–2. A nota da semana <em>não</em> acompanha a receita da semana.</li>
+</ul>
+</div>
+
+<h2>1. Como está o desempenho de cada hotel, comparado com os concorrentes diretos?</h2>
+<div class="duas">
+<div>
+<p>Cada hotel foi comparado só com os hotéis do <strong>mesmo tier</strong> (seu <em>comp set</em>), pelo <strong>RGI</strong>: a receita por quarto disponível do hotel dividida pela dos concorrentes (100 = paridade).</p>
+<table>
+  <tr><th>Abaixo dos concorrentes (RGI &lt; 100)</th><th class="n">RGI</th><th class="n">Preço vs. MARS</th></tr>
+  <tr><td>The Foxglove (boutique)</td><td class="n ruim">76</td><td class="n">−19%</td></tr>
+  <tr><td>Ridgeline Motor Inn (economy)</td><td class="n ruim">85</td><td class="n">−6%</td></tr>
+  <tr><td>Willowmere Lodge (upscale)</td><td class="n ruim">87</td><td class="n">−9%</td></tr>
+  <tr><td>The Wren Rooms · Copper Meridian · Cedar &amp; Salt</td><td class="n ruim">89–91</td><td class="n">−3% a −4%</td></tr>
+  <tr><td>Seabright Grand · Paloma Court</td><td class="n">93–99,5</td><td class="n">−2% a −1%</td></tr>
+</table>
+<p>Acima da paridade: The Lantern House (138), Northgate Inn (117), Harborlight Suites (116), Marisol Bay Resort (112), Kestrel Park (109) e Alder &amp; Quay (104).</p>
+<p><strong>O padrão:</strong> os hotéis com RGI baixo praticam diárias <strong>abaixo</strong> dos concorrentes e da diária de mercado (MARS), mas a ocupação deles também fica abaixo ou na paridade. <strong>O desconto não está comprando volume.</strong> Se os 8 tivessem o RevPAR dos concorrentes, a receita de quartos seria ~9,4 mi USD maior em 2027–2028 (só Copper Meridian e Seabright respondem por ~4,2 mi).</p>
+<p class="rec">Recomendação: revisar a política de preços dos 8 hotéis abaixo de 100, começando por The Foxglove, Willowmere e Ridgeline, e testar aumentos graduais em direção à faixa MARS.</p>
+</div>
+<figure>
+  <img src="../notebooks/figuras/03_posicionamento.png" alt="Mapa de posicionamento ARI x MPI">
+  <figcaption>Preço (ARI) × ocupação (MPI) contra os concorrentes do tier, média 2027–2028. Seis hotéis estão no quadrante "barato e vazio".</figcaption>
+</figure>
+</div>
+
+<h2>2. As decisões de preço tomadas toda semana estão funcionando?</h2>
+<div class="duas">
+<div>
+<p>Foram 1.442 decisões semanais: 634 de aumentar, 619 de manter e 189 de reduzir. Para cada uma, o dataset compara o RevPAR da <strong>semana seguinte</strong> com o da semana da decisão.</p>
+<ul>
+  <li>A semana seguinte foi "melhor" em <strong>38%</strong> dos aumentos, <strong>38%</strong> das manutenções e <strong>43%</strong> das reduções. Cerca de 31% foram "piores" nos três casos.</li>
+  <li>Isso <strong>não mede o efeito da decisão</strong>. A semana seguinte muda por sazonalidade e eventos, e não existe um grupo de comparação ("o que teria acontecido sem a decisão").</li>
+  <li><strong>As recomendações não parecem estar sendo aplicadas.</strong> O sistema recomendou <em>aumentar</em> o preço do Foxglove, do Willowmere e do Ridgeline em ~100 de 103 semanas, e <em>reduzir</em> o do Lantern House em 100 semanas. Mesmo assim, o posicionamento desses hotéis não mudou em dois anos.</li>
+</ul>
+<p class="rec">Recomendação: registrar se cada recomendação foi executada e, para medir o efeito, aplicar a regra em parte das semanas ou dos hotéis e comparar com um grupo que não a aplicou.</p>
+</div>
+<figure>
+  <img src="../notebooks/figuras/08_decisoes.png" alt="Resultado da semana seguinte por decisão">
+  <figcaption>A distribuição de resultados é praticamente a mesma para as três ações.</figcaption>
+</figure>
+</div>
+
+<h2>3. O que os hóspedes estão dizendo, e isso tem relação com o resultado financeiro?</h2>
+<div class="duas">
+<div>
+<p>São 12.077 avaliações, com nota média de <strong>3,31</strong>. A distribuição é polarizada: <strong>55,8%</strong> têm 3 estrelas ou menos, <strong>29,2%</strong> têm 1 ou 2, e 25,1% têm 5.</p>
+<ul>
+  <li><strong>Quatro causas geram 82% das notas 1–2:</strong> cobranças indevidas (26%), limpeza (21%), conservação do quarto (18%) e barulho (17%). Todas são <strong>operacionais</strong> e têm ação de recuperação definida.</li>
+  <li>As notas pioram do luxo (22% de notas 1–2) ao econômico (38%). <strong>Northgate Inn</strong> (39%) e <strong>Ridgeline</strong> (36%) lideram.</li>
+  <li>Os hotéis respondem a <strong>100%</strong> das avaliações de 1–3 estrelas e a só <strong>29%</strong> das de 4–5, em ~21 horas.</li>
+  <li><strong>Relação com o financeiro:</strong> juntando todas as semanas, nota e RevPAR têm correlação fraca (0,22). <strong>Dentro de cada hotel ela desaparece (≈ 0).</strong> A correlação vem do <em>tier</em>, porque hotéis de luxo têm notas e receitas mais altas. Não há evidência de que uma semana com nota melhor gere mais receita. Um efeito de reputação, se existir, seria de longo prazo e não é mensurável com estes dados.</li>
+</ul>
+<p class="rec">Recomendação: um plano operacional para as 4 causas (auditoria de folio, inspeção de limpeza, ordens de serviço, kit de sono), priorizando economy e midscale, e responder também aos elogios.</p>
+</div>
+<figure>
+  <img src="../notebooks/figuras/05_cenarios.png" alt="Distribuição dos cenários das avaliações">
+  <figcaption>Participação de cada motivo no total de avaliações, com a nota média. Vermelho = negativo; cinza = misto; azul = positivo.</figcaption>
+</figure>
+</div>
+
+<h2>Limitações destas conclusões</h2>
+<ul class="limites">
+  <li><strong>Dados sintéticos:</strong> Port Alder, os hotéis e os números são simulados. As conclusões valem para esta simulação, não para o mercado real.</li>
+  <li><strong>Associação não é causa:</strong> nem a relação preço–ocupação, nem o resultado das decisões, nem a relação nota–receita foram testados com desenho experimental.</li>
+  <li><strong>Resultado das decisões é observacional</strong> e sujeito a ruído: o README informa que 3% dos rótulos de recomendação foram trocados de propósito.</li>
+  <li><strong>O gap de 9,4 mi USD é uma referência, não uma promessa:</strong> ele supõe que o hotel atingiria o RevPAR dos concorrentes sem perder ocupação.</li>
+  <li><strong>Só dois anos de dados</strong>, praticamente idênticos. Qualquer projeção (por exemplo, ~26,3 mi USD para o Marisol Bay em 2029) é frágil e não tem intervalo de confiança.</li>
+  <li><strong>Médias ponderadas × simples:</strong> os indicadores deste relatório pesam cada hotel pelo seu número de quartos. Por isso a ocupação de 70,7% difere da média simples de 70,9% citada na documentação do dataset.</li>
+</ul>
+
+<p class="rodape">Fonte: <em>Nice Rooms: Hotel Revenue, MARS and Reviews</em> (Kaggle, CC BY 4.0). Análises reproduzíveis nos notebooks <code>01</code>–<code>04</code>, no banco <code>banco/nice_rooms.db</code> e no painel <code>dashboard/index.html</code>.</p>
+
+</body>
+</html>

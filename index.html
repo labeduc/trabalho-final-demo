@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trabalho Final · Port Alder</title>
+  <style>
+    :root {
+      --fundo: #f6f5f1;
+      --superficie: #ffffff;
+      --texto: #1b1b19;
+      --texto-2: #52514e;
+      --borda: #e1e0d9;
+      --destaque: #2a78d6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--fundo);
+      color: var(--texto);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+    main { max-width: 760px; margin: 0 auto; padding: 32px 16px; }
+    h1 { margin: 0 0 4px; font-size: 1.6rem; }
+    .sub { margin: 0 0 24px; color: var(--texto-2); }
+    .nota { font-size: 0.9rem; color: var(--texto-2); margin-top: 24px; }
+    ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+    li {
+      background: var(--superficie);
+      border: 1px solid var(--borda);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    li strong { display: block; margin-bottom: 2px; }
+    a { color: var(--destaque); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Inteligência de Receita · Hotéis de Port Alder</h1>
+    <p class="sub">Trabalho Final — modelo de resolução do curso de Ciência de Dados.</p>
+
+    <ul>
+      <li>
+        <strong>Painel de receita (Etapa 5)</strong>
+        <a href="dashboard/">Abrir o painel</a>
+      </li>
+      <li>
+        <strong>Relatório executivo (Etapa 6)</strong>
+        <a href="relatorio_executivo/relatorio_executivo.html">HTML</a> ·
+        <a href="relatorio_executivo/relatorio_executivo.pdf">PDF</a>
+      </li>
+      <li>
+        <strong>Apresentação</strong>
+        <a href="apresentacao/slides.html">Slides (HTML)</a> ·
+        <a href="apresentacao/slides.pdf">Slides (PDF)</a>
+      </li>
+      <li>
+        <strong>Visualizações interativas (Etapa 4)</strong>
+        <a href="notebooks/figuras/06_sankey.html">Sankey</a> ·
+        <a href="notebooks/figuras/09_nota_revpar.html">Nota × RevPAR</a>
+      </li>
+      <li>
+        <strong>Banco de dados (Etapa 3)</strong>
+        <a href="banco/diagrama_er.png">Diagrama ER (PNG)</a> ·
+        <a href="banco/diagrama_er.pdf">PDF</a>
+      </li>
+    </ul>
+
+    <p class="nota">O dataset <em>Nice Rooms</em> é sintético. As conclusões valem para a cidade fictícia de Port Alder, não para o mercado hoteleiro real.</p>
+  </main>
+</body>
+</html>

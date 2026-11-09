@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Receita · Port Alder</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Chart.js (Módulo 9), versão fixada -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="cabecalho">
+    <div class="cabecalho__titulo">
+      <h1>Painel de Receita — Hotéis de Port Alder</h1>
+      <p>Para a diretoria da associação: desempenho contra os concorrentes, efeito das decisões de preço e voz dos hóspedes.</p>
+    </div>
+
+    <form class="filtros" id="filtros" aria-label="Filtros do painel">
+      <label>Ano
+        <select id="filtro-ano">
+          <option value="todos">2027 e 2028</option>
+          <option value="2027">2027</option>
+          <option value="2028">2028</option>
+        </select>
+      </label>
+      <label>Tier
+        <select id="filtro-tier">
+          <option value="todos">Todos os tiers</option>
+        </select>
+      </label>
+      <label>Hotel
+        <select id="filtro-hotel">
+          <option value="todos">Todos os hotéis</option>
+        </select>
+      </label>
+      <button type="button" id="limpar" class="botao">Limpar filtros</button>
+    </form>
+  </header>
+
+  <main>
+    <p class="resumo-filtro" id="resumo-filtro" aria-live="polite"></p>
+
+    <section class="vazio" id="vazio" hidden>
+      <h2>Nenhum dado para esta combinação de filtros</h2>
+      <p>O hotel escolhido não pertence ao tier selecionado. Troque o tier ou o hotel, ou limpe os filtros.</p>
+      <button type="button" class="botao" id="limpar-vazio">Limpar filtros</button>
+    </section>
+
+    <div id="conteudo">
+      <section class="kpis" aria-label="Indicadores-chave">
+        <article class="kpi">
+          <h3>Receita total</h3>
+          <p class="kpi__valor" id="kpi-receita">–</p>
+          <p class="kpi__nota">quartos + extras (USD)</p>
+        </article>
+        <article class="kpi">
+          <h3>Ocupação</h3>
+          <p class="kpi__valor" id="kpi-ocupacao">–</p>
+          <p class="kpi__nota">quartos vendidos ÷ disponíveis</p>
+        </article>
+        <article class="kpi">
+          <h3>Diária média (ADR)</h3>
+          <p class="kpi__valor" id="kpi-adr">–</p>
+          <p class="kpi__nota">receita de quartos ÷ vendidos</p>
+        </article>
+        <article class="kpi">
+          <h3>RevPAR</h3>
+          <p class="kpi__valor" id="kpi-revpar">–</p>
+          <p class="kpi__nota">receita por quarto disponível</p>
+        </article>
+        <article class="kpi">
+          <h3>RGI vs. concorrentes</h3>
+          <p class="kpi__valor" id="kpi-rgi">–</p>
+          <p class="kpi__nota" id="kpi-rgi-nota">100 = igual aos concorrentes</p>
+        </article>
+        <article class="kpi">
+          <h3>Nota dos hóspedes</h3>
+          <p class="kpi__valor" id="kpi-nota">–</p>
+          <p class="kpi__nota" id="kpi-nota-sub">–</p>
+        </article>
+      </section>
+
+      <h2 class="secao">1. Desempenho contra os concorrentes</h2>
+      <section class="graficos">
+        <article class="cartao">
+          <h3>RevPAR mensal: selecionados × concorrentes diretos</h3>
+          <p class="cartao__sub">Receita por quarto disponível (USD). A linha cinza é o comp set (hotéis do mesmo tier).</p>
+          <div class="grafico"><canvas id="grafico-revpar" role="img" aria-label="Linha do RevPAR mensal dos hotéis selecionados comparado ao dos concorrentes"></canvas></div>
+        </article>
+        <article class="cartao">
+          <h3>Mapa de posicionamento</h3>
+          <p class="cartao__sub">Preço (ARI) × ocupação (MPI) contra os concorrentes. As linhas em 100 marcam a paridade.</p>
+          <div class="grafico"><canvas id="grafico-posicao" role="img" aria-label="Dispersão dos hotéis por índice de preço e índice de ocupação"></canvas></div>
+        </article>
+      </section>
+
+      <h2 class="secao">2. Decisões de preço e voz dos hóspedes</h2>
+      <section class="graficos">
+        <article class="cartao">
+          <h3>Resultado da semana seguinte, por decisão</h3>
+          <p class="cartao__sub">RevPAR da semana seguinte comparado ao da semana da decisão (faixa de ±1,5%). Observacional: não prova causa.</p>
+          <div class="grafico grafico--baixo"><canvas id="grafico-decisoes" role="img" aria-label="Barras empilhadas com a proporção de semanas melhores, iguais e piores por tipo de decisão"></canvas></div>
+        </article>
+        <article class="cartao">
+          <h3>Motivos das avaliações</h3>
+          <p class="cartao__sub">Número de avaliações por cenário. Azul = positivo, cinza = misto, vermelho = negativo.</p>
+          <div class="grafico"><canvas id="grafico-cenarios" role="img" aria-label="Barras com o número de avaliações por cenário"></canvas></div>
+        </article>
+      </section>
+
+      <h2 class="secao">3. Hotéis em detalhe</h2>
+      <section class="cartao">
+        <p class="cartao__sub">Ordenado pelo RGI, do menor para o maior: no topo estão os hotéis que mais perdem receita para os concorrentes. ⚠ = RGI abaixo de 100.</p>
+        <div class="tabela-rolagem">
+          <table class="tabela" id="tabela">
+            <thead>
+              <tr>
+                <th scope="col">Hotel</th>
+                <th scope="col">Tier</th>
+                <th scope="col" class="num">Receita (mi USD)</th>
+                <th scope="col" class="num">Ocupação</th>
+                <th scope="col" class="num">ADR</th>
+                <th scope="col" class="num">RevPAR</th>
+                <th scope="col" class="num">RGI</th>
+                <th scope="col" class="num">Nota</th>
+                <th scope="col" class="num">1–2 ★</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <p><strong>Fonte dos dados:</strong> <em>Nice Rooms: Hotel Revenue, MARS and Reviews</em> (Kaggle, licença CC BY 4.0), 14 hotéis, 2027–2028, agregados por hotel e mês a partir de <code>banco/nice_rooms.db</code>.</p>
+    <p><strong>Atenção:</strong> o dataset é <strong>sintético</strong>. Os hotéis, a cidade de Port Alder e todos os números são fictícios, e as conclusões não valem para o mercado hoteleiro real.</p>
+    <p id="gerado-em"></p>
+  </footer>
+
+  <script src="dados.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
